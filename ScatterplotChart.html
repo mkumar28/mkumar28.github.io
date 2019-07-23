@@ -1,0 +1,173 @@
+<html>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<style> body {
+  background-color: #F1F3F3    
+}
+.axis {
+	font: 15px sans-serif;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #D4D8DA;
+  stroke-width: 1px;
+  shape-rendering: crispEdges;
+  opacity: 0.5;
+}
+.tooltip {
+  position: absolute;
+  --display:none;
+  width: 200px;
+  height:auto;
+  background: none repeat scroll 0 0 #ffffff;
+  border: 1px solid #6F257F;
+  padding: 14px;
+}
+</style>
+<body onload='init()'>
+
+<script>
+  
+async function init() {
+
+  
+
+const data = await d3.csv('https://raw.githubusercontent.com/mkumar28/CSDV/master/HollywoodsMostProfitableStories.csv');
+
+var margin = {top: 100, right: 20, bottom: 30, left: 200},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+    
+
+//Set up X 
+var x = d3.scaleLinear().domain([30,95]).range([0, width]);
+  var y = d3.scaleLinear().domain([-1,10]).range([height, 0]);
+  
+var x_axis = d3.axisBottom().scale(x);
+
+var y_axis = d3.axisLeft().scale(y);
+  
+  
+ //var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+  
+  var tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+  
+   
+
+  
+
+ 
+var svg = d3.select('body').append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  
+ var data1= []
+ data.forEach(function(r){
+      data1.push({
+        Profitability: r.Profitability,
+        Audience_score: r.Audience_score,
+        Genre:r.Genre,
+        film: r.Film
+       
+      });  
+  
+});
+ 
+  
+  var cValue = function(d) { return d.Genre;}
+  var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+
+   // append the rectangles for the bar chart
+  svg.selectAll(".dot")
+      .data(data1)
+      .enter().append("circle")
+      .attr("class", "dot")
+      .attr("r", 4)
+      .attr("cx", function(d) { return x(d.Audience_score); })
+      .attr("cy", function(d) { return y(d.Profitability) ; })
+      .style("fill", function(d){return color(cValue(d));})
+       .on("mouseover", function(d) {
+          tooltip.transition()
+               .duration(200)
+               .style("opacity", .9);
+          tooltip.html("Audience_score : "+(d.Audience_score) + "<br>"  + "Profitability : "+d.Profitability
+                   + "<br>"+ "Film : "+d.film)
+               .style("left", (d3.event.pageX + 5) + "px")
+               .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", function(d) {
+          tooltip.transition()
+               .duration(500)
+               .style("opacity", 0)
+               
+      });
+  
+  
+
+ svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
+      .append('text')
+      .attr("transform", "rotate(-1)translate(750,30)")
+      .attr("y", -27)
+      .attr("dy", "0.30em")
+      .attr("text-anchor", "end")
+      .attr("fill", "#5D6971")
+      .text("Availblity%");
+ 
+  formatValue = d3.format(".2s");
+  // add the y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y).tickFormat(d3.format(".1s")))
+      .append('text')
+      .attr("transform", "rotate(90)translate(54,15)")
+      .attr("y", -27)
+      .attr("dy", "0.30em")
+      .attr("text-anchor", "end")
+      .attr("fill", "#5D6971")
+      .text("Profitablity%");
+  
+  
+  
+  // draw legend
+  var legend = svg.selectAll(".legend")
+      .data(color.domain())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  // draw legend colored rectangles
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  // draw legend text
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d;})
+
+
+
+
+
+
+
+      
+      
+  
+ }
+
+</script>
+</body>
+</html>
+  
+  
+  
