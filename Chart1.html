@@ -24,6 +24,7 @@
   padding: 14px;
 }</style>
 <body onload='init()'>
+ <div id="drop" align=center></div>
 
 <script>
 async function init() {
@@ -31,14 +32,13 @@ async function init() {
   
 
 const data = await d3.csv('https://raw.githubusercontent.com/mkumar28/CSDV/master/HollywoodsMostProfitableStories.csv');
-//console.log(data)
+
 var margin = {top: 100, right: 20, bottom: 30, left: 100},
     
 
 width = 960 - margin.left - margin.right,
 height = 500 - margin.top - margin.bottom;
-  console.log(height)
-  
+ 
   
 var x = d3.scaleBand()
           .range([0, width])
@@ -80,7 +80,14 @@ var svg = d3.select('body').append("svg")
     });
 });
 
+ var element  = d3.nest()
+  .key(function(d){return d.Year;})
+  .key(function(d){return d.Genre})
+  .rollup(function(g){ return g.length;}).entries(data)
  
+ 
+ 
+  
        
   var color = ["red", "Yellow", "steelblue", "orange", "green" , "blue"];
   i=0;
@@ -89,23 +96,35 @@ var svg = d3.select('body').append("svg")
          i++
                
        });
-   
-   console.log(data1)
-  
-            
-  
+
+  var elements = []
+  element.forEach(function(d)
+             { if(d.key == 2008){
+               d.values.forEach(function(g){
+                   elements.push({
+                         key:g.key,
+                         values : g.value
+                        });  
+                       
+                        });
+                        }          
+                      });
+          
+     
+  //console.log(elements)
   
 
   
   // Scale the range of the data in the domains
-  x.domain(data1.map(function(d) { return d.Genre;}));
-  y.domain([0, d3.max(data1, function(d) { return  d.count})]);
+ x.domain(data1.map(function(d) { return d.Genre;}));
+ y.domain([0, d3.max(data1, function(d) { return  d.count})]);
    
-  // append the rectangles for the bar chart
-  svg.selectAll(".bar")
+  var color = d3.scaleOrdinal(d3.schemeCategory10);
+  
+  svg.selectAll(".rectangle")
       .data(data1)
       .enter().append("rect")
-      .attr("class", "bar")
+      .attr("class", "rectangle")
       .attr("x", function(d) { return x(d.Genre); })
       .attr("width", x.bandwidth())
       .attr("y", function(d) { return y(d.count); })
@@ -121,31 +140,170 @@ var svg = d3.select('body').append("svg")
      .on("mouseout", function(d){ tooltip.style("display", "none");});
        
   
-  svg.append("g")
-  .attr("transform", "translate(0," + height + ")")
-  .call(d3.axisBottom(x))
-  .append('text')
-  .attr("transform", "rotate(-1)translate(350,-350)")
-  .attr("y", -27)
-  .attr("dy", "0.30em")
-  .attr("text-anchor", "end")
-  .attr("fill", "#5D6971")
-  .text("Genre");
+ var xCall=  svg.append("g").attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+ 
+     xCall.append('text')
+      .attr("transform", "rotate(-1)translate(350,-350)")
+      .attr("y", -27)
+      .attr("dy", "0.30em")
+      .attr("text-anchor", "end")
+      .attr("fill", "#5D6971")
+      .text("Genre");
+  
+  
 
-// add the y Axis
-svg.append("g")
-  .call(d3.axisLeft(y))
-  .append('text')
-  .attr("transform", "rotate(90)translate(80,20)")
-  .attr("y", -27)
-  .attr("dy", "0.30em")
-  .attr("text-anchor", "end")
-  .attr("fill", "#5D6971")
-  .text("Number of Movies");
+  // add the y Axis
+var yCall = svg.append("g")
+      .call(d3.axisLeft(y));
 
+     yCall .append('text')
+      .attr("transform", "rotate(90)translate(80,20)")
+      .attr("y", -27)
+      .attr("dy", "0.30em")
+      .attr("text-anchor", "end")
+      .attr("fill", "#5D6971")
+      .text("Number of Movies");
+   
+  
+  
+  var count = 0;
+  var selector = d3.select("#drop")
+    	.append("select")
+    	.attr("id","dropdown")
+        .on("change", function(d){
+          console.log(count)
+              d3.selectAll("svg").transition().remove();
+        	  selection = document.getElementById("dropdown");
+          
+          
+          svg = d3.select('body').append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", 
+                  "translate(" + margin.left + "," + margin.top + ")");
+  
+          
+          
+          //Creating new data set to show data for every year  
+           var elements = []
+            element.forEach(function(d)
+             { if(d.key == selection.value){
+               d.values.forEach(function(g){
+                 if(g.key == 'Comedy')
+                   elements.push({
+                         key:g.key,
+                         value : g.value,
+                         color:'red'
+                         
+                        });
+                 if(g.key == 'Drama')
+                    elements.push({
+                         key:g.key,
+                         value : g.value,
+                         color:'Yellow'
+                         
+                        });
+                 if(g.key == 'Romance')
+                    elements.push({
+                         key:g.key,
+                         value : g.value,
+                         color:'steelblue'
+                         
+                        });
+                 if(g.key == 'Animation')
+                    elements.push({
+                         key:g.key,
+                         value : g.value,
+                         color:'orange'
+                         
+                        });
+                 if(g.key == 'Action')
+                    elements.push({
+                         key:g.key,
+                         value : g.value,
+                         color:'green'
+                         
+                        });
+                  if(g.key == 'Fantasy')
+                    elements.push({
+                         key:g.key,
+                         value : g.value,
+                         color:'blue'
+                         
+                        });
+                       
+                        });
+                        }          
+                      });
+         
+          
+
+   x.domain(elements.map(function(d) { return d.key;}));
+  y.domain([0, d3.max(elements, function(d) { return  d.value})]);
+          
+       
+      //Creating bar chart for the new dataset
+   var bar =  svg.selectAll(".rectangle")
+      .data(elements)
+      .enter()
+      .append("rect")
+      .attr("class", "rectangle");
+      
+        
+      
+ bar.transition().duration(3000)
+       .attr("x", function(d){return x(d.key);})
+       .attr("width", x.bandwidth())
+	   .attr("y", function(d){return y(d.value);})
+       .attr("height", function(d) { return height - y(d.value) ; })
+       .style("fill", function(d){return d.color;});
+  
+          
+       
+          
+   //add the x Axis         
+   svg.append("g").attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
+      .append('text')
+      .attr("transform", "rotate(-1)translate(350,-350)")
+      .attr("y", -27)
+      .attr("dy", "0.30em")
+      .attr("text-anchor", "end")
+      .attr("fill", "#5D6971")
+      .text("Genre");
+
+   
+     // add the y Axis
+      svg.append("g")
+      .call(d3.axisLeft(y))
+      .append('text')
+      .attr("transform", "rotate(90)translate(80,20)")
+      .attr("y", -27)
+      .attr("dy", "0.30em")
+      .attr("text-anchor", "end")
+      .attr("fill", "#5D6971")
+      .text("Number of Movies");
+          
+ 
+           
+
+        });
+  
+   selector.selectAll("option")
+      .data(element)
+      .enter().append("option")
+      .attr("value", function(d){
+        return d.key;
+      })
+      .text(function(d){
+        return d.key;
+      });
 
   
-   
+  
+ 
 
 
 }
