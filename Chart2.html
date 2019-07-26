@@ -22,13 +22,24 @@
   background: none repeat scroll 0 0 #ffffff;
   border: 1px solid #6F257F;
   padding: 14px;
-}</style>
+}
+#remove, #drop {
+    position: relative;
+    left:50%;
+    top: 80
+    
+    
+}
+ 
+</style>
 <body onload='init()'>
+  <div id="drop" >Filter by Year : </div>
+  <div id="remove" ></div>
 
 <script>
 async function init() {
 
-  
+
 
 const data = await d3.csv('https://raw.githubusercontent.com/mkumar28/CSDV/master/HollywoodsMostProfitableStories.csv');
 //console.log(data)
@@ -53,8 +64,9 @@ var y_axis = d3.axisLeft().scale(y);
   
 var tooltip = d3.select("body").append("div").attr("class", "toolTip");
 
- 
+
 var svg = d3.select('body').append("svg")
+    .attr("id", "mySvg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -87,6 +99,27 @@ var data1 = []
         count: counts[key]
         });
 });
+ //Reading year, Genre, avg proftablity in one dataset 
+  var element  = d3.nest()
+  .key(function(d){return d.Year;})
+  .key(function(d){return d.Genre})
+  .rollup(function(d){ return { profit: d3.sum(d,function(g)
+  {return g.Profitability; }),
+   count : d.length }; }).entries(data)
+  
+console.log(data1)
+  var elements = []
+  element.forEach(function(d)
+             { if(d.key == 2008){
+               d.values.forEach(function(g){
+                   elements.push({
+                         key:g.key,
+                         values : g.value
+                        });  
+                       
+                        });
+                        }          
+                      });
 
 //Adding color and profitablity to the Data1 Array     
   var color = ["red", "Yellow", "steelblue", "orange", "green" , "blue"];
@@ -145,9 +178,172 @@ svg.append("g")
   .attr("text-anchor", "end")
   .attr("fill", "#5D6971")
   .text("Average Profitablity in %");
-      
-}
+  
+ //On click
+  var selector = d3.select("#drop")
+    	.append("select")
+    	.attr("id","dropdown")
+        .on("change", function(d){
+           var duration = 1000;
+           /*hiding the exisint svg and also removing it every time*/
+           document.getElementById("mySvg").style.display = "none";
+           d3.selectAll("svg").transition().remove();
+          /*Reading the value selected from the drop down*/
+           selection = document.getElementById("dropdown");
+  
+        var  svg = d3.select('body').append("svg")
+            .attr("id", "mySvg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", 
+                  "translate(" + margin.left + "," + margin.top + ")");
+  
+          
+          
+          //Creating new data set to show data for every year  
+           var elements = []
+            element.forEach(function(d)
+             { if(d.key == selection.value){
+               d.values.forEach(function(g){
+                 if(g.key == 'Comedy')
+                   elements.push({
+                         key:g.key,
+                         value : g.value,
+                         count : g.count,
+                         profit : g.Profitability,
+                         color:'red'
+                         
+                        });
+                 if(g.key == 'Drama')
+                    elements.push({
+                         key:g.key,
+                         value : g.value,
+                         count : g.count,
+                         profit : g.Profitability,
+                         color:'Yellow'
+                         
+                        });
+                 if(g.key == 'Romance')
+                    elements.push({
+                         key:g.key,
+                         value : g.value,
+                         count : g.count,
+                         profit : g.Profitability,
+                         color:'steelblue'
+                         
+                        });
+                 if(g.key == 'Animation')
+                    elements.push({
+                         key:g.key,
+                         value : g.value,
+                         count : g.count,
+                         profit : g.Profitability,
+                         color:'orange'
+                         
+                        });
+                 if(g.key == 'Action')
+                    elements.push({
+                         key:g.key,
+                         value : g.value,
+                         count : g.count,
+                         profit : g.Profitability,
+                         color:'green'
+                         
+                        });
+                  if(g.key == 'Fantasy')
+                    elements.push({
+                         key:g.key,
+                         value : g.value,
+                         count : g.count,
+                         profit :g.Profitability,
+                         color:'blue'
+                         
+                        });
+                       
+                        });
+                        }          
+                      });
+         
+     console.log(elements)
 
+  x.domain(elements.map(function(d) { return d.key;}));
+  y.domain([0, d3.max(elements, function(d) { return  d.value.profit / (d.value.count )})]);
+          
+       
+      //Creating bar chart for the new dataset
+   var bar =  svg.selectAll(".rectangle")
+      .data(elements)
+      .enter()
+      .append("rect")
+      .attr("class", "rectangle")
+      .on("mousemove", function(d){
+            tooltip
+              .style("left", d3.event.pageX - 50 + "px")
+              .style("top", d3.event.pageY - 70 + "px")
+              .style("display", "inline-block")
+              .html(("Genre: "+d.key) + "<br>"+"Average Profitablity in %: "+Math.round(d.value.profit / (d.value.count )));
+        })
+     .on("mouseout", function(d){ tooltip.style("display", "none");})
+       
+
+    
+ bar.transition().duration(duration)
+       .attr("x", function(d){return x(d.key);})
+       .attr("width", x.bandwidth())
+	   .attr("y", function(d){return y(d.value.profit / (d.value.count));})
+       .attr("height", function(d) { return height - y(d.value.profit / (d.value.count)) ; })
+       .style("fill", function(d){return d.color;})
+       .ease(d3.easeLinear)
+       
+       
+  //add the x axis        
+ var xCall=  svg.append("g").attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+  xCall.append('text')
+      .attr("transform", "rotate(-1)translate(350,-350)")
+      .attr("y", -27)
+      .attr("dy", "0.30em")
+      .attr("text-anchor", "end")
+      .attr("fill", "#5D6971")
+      .text("Genre");
+  
+  
+
+  // add the y Axis
+var yCall = svg.append("g").call(d3.axisLeft(y));
+      yCall.append('text')
+      .attr("transform", "rotate(90)translate(100,15)")
+      .attr("y", -27)
+      .attr("dy", "0.30em")
+      .attr("text-anchor", "end")
+      .attr("fill", "#5D6971")
+      .text("Average Profitablity in %");
+          
+       });
+      
+  selector.selectAll("option")
+      .data(element)
+      .enter().append("option")
+      .attr("value", function(d){
+        return d.key;
+      })
+      .text(function(d){
+        return d.key;
+      });
+  
+   var button = d3.select("#remove")
+    	.append("button")
+        .text("Remove Filter By Year")
+        .attr("id","button")
+        .on("click", function(d){
+         location.reload();
+        });
+
+
+
+}
+ 
 </script>
 </body>
 </html>
