@@ -22,9 +22,17 @@
   background: none repeat scroll 0 0 #ffffff;
   border: 1px solid #6F257F;
   padding: 14px;
-}</style>
+  }
+ #drop{
+    position: relative;
+    left:50%;
+    top: 80
+    
+    
+  }
+</style>
 <body onload='init()'>
- <div id="drop" align=center></div>
+ <div id="drop" >Filter by Year : </div>
 
 <script>
 async function init() {
@@ -37,7 +45,7 @@ var margin = {top: 100, right: 20, bottom: 30, left: 100},
     
 
 width = 960 - margin.left - margin.right,
-height = 500 - margin.top - margin.bottom;
+    height = 500 - margin.top - margin.bottom;
  
   
 var x = d3.scaleBand()
@@ -48,13 +56,13 @@ var y = d3.scaleLinear().domain([0,42])
           .range([height, 0]);
   
 var x_axis = d3.axisBottom().scale(x);
-
 var y_axis = d3.axisLeft().scale(y);
   
 var tooltip = d3.select("body").append("div").attr("class", "toolTip");
 
  
 var svg = d3.select('body').append("svg")
+     .attr("id", "mySvg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -111,10 +119,7 @@ var svg = d3.select('body').append("svg")
                       });
           
      
-  //console.log(elements)
-  
-
-  
+    
   // Scale the range of the data in the domains
  x.domain(data1.map(function(d) { return d.Genre;}));
  y.domain([0, d3.max(data1, function(d) { return  d.count})]);
@@ -153,9 +158,10 @@ var svg = d3.select('body').append("svg")
   
   
 
-  // add the y Axis
+// add the y Axis
 var yCall = svg.append("g")
-      .call(d3.axisLeft(y));
+
+     yCall.call(d3.axisLeft(y));
 
      yCall .append('text')
       .attr("transform", "rotate(90)translate(80,20)")
@@ -165,19 +171,24 @@ var yCall = svg.append("g")
       .attr("fill", "#5D6971")
       .text("Number of Movies");
    
-  
+ 
   
   var count = 0;
   var selector = d3.select("#drop")
     	.append("select")
     	.attr("id","dropdown")
+         .style("align", 'left' )
+         .style("top", "1000000")
         .on("change", function(d){
-          console.log(count)
-              d3.selectAll("svg").transition().remove();
-        	  selection = document.getElementById("dropdown");
-          
-          
-          svg = d3.select('body').append("svg")
+           var duration = 1000;
+           /*hiding the exisint svg and also removing it every time*/
+           document.getElementById("mySvg").style.display = "none";
+           d3.selectAll("svg").transition().remove();
+          /*Reading the value selected from the drop down*/
+           selection = document.getElementById("dropdown");
+  
+        var  svg = d3.select('body').append("svg")
+            .attr("id", "mySvg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
@@ -240,7 +251,7 @@ var yCall = svg.append("g")
          
           
 
-   x.domain(elements.map(function(d) { return d.key;}));
+  x.domain(elements.map(function(d) { return d.key;}));
   y.domain([0, d3.max(elements, function(d) { return  d.value})]);
           
        
@@ -249,36 +260,45 @@ var yCall = svg.append("g")
       .data(elements)
       .enter()
       .append("rect")
-      .attr("class", "rectangle");
-      
-        
-      
- bar.transition().duration(3000)
+      .attr("class", "rectangle")
+      .on("mousemove", function(d){
+            tooltip
+              .style("left", d3.event.pageX - 50 + "px")
+              .style("top", d3.event.pageY - 70 + "px")
+              .style("display", "inline-block")
+              .html(("Genre: "+d.key) + "<br>"+"No. of Movies: "+(d.value));
+        })
+     .on("mouseout", function(d){ tooltip.style("display", "none");})
+       
+
+    
+ bar.transition().duration(duration)
        .attr("x", function(d){return x(d.key);})
        .attr("width", x.bandwidth())
 	   .attr("y", function(d){return y(d.value);})
        .attr("height", function(d) { return height - y(d.value) ; })
-       .style("fill", function(d){return d.color;});
-  
-          
+       .style("fill", function(d){return d.color;})
+       .ease(d3.easeLinear)
        
-          
-   //add the x Axis         
-   svg.append("g").attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x))
-      .append('text')
+       
+  //add the x axis        
+ var xCall=  svg.append("g").attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+  xCall.append('text')
       .attr("transform", "rotate(-1)translate(350,-350)")
       .attr("y", -27)
       .attr("dy", "0.30em")
       .attr("text-anchor", "end")
       .attr("fill", "#5D6971")
       .text("Genre");
+  
+  
 
-   
-     // add the y Axis
-      svg.append("g")
-      .call(d3.axisLeft(y))
-      .append('text')
+  // add the y Axis
+var yCall = svg.append("g");
+      yCall.transition().duration(duration);
+      yCall.call(d3.axisLeft(y));
+      yCall.append('text')
       .attr("transform", "rotate(90)translate(80,20)")
       .attr("y", -27)
       .attr("dy", "0.30em")
@@ -286,12 +306,11 @@ var yCall = svg.append("g")
       .attr("fill", "#5D6971")
       .text("Number of Movies");
           
- 
-           
-
-        });
+  count = count+1
+       });
   
-   selector.selectAll("option")
+  
+  var filter = selector.selectAll("option")
       .data(element)
       .enter().append("option")
       .attr("value", function(d){
@@ -301,8 +320,7 @@ var yCall = svg.append("g")
         return d.key;
       });
 
-  
-  
+
  
 
 
