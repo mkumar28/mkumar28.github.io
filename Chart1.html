@@ -23,7 +23,7 @@
   border: 1px solid #6F257F;
   padding: 14px;
   }
- #drop{
+#remove, #drop{
     position: relative;
     left:50%;
     top: 80
@@ -33,6 +33,7 @@
 </style>
 <body onload='init()'>
  <div id="drop" >Filter by Year : </div>
+  <div id="remove" ></div>
 
 <script>
 async function init() {
@@ -320,7 +321,13 @@ var yCall = svg.append("g");
         return d.key;
       });
 
-
+ var button = d3.select("#remove")
+    	.append("button")
+        .text("Remove Filter By Year")
+        .attr("id","button")
+        .on("click", function(d){
+         location.reload();
+        });
  
 
 
