@@ -1,19 +1,253 @@
 <html>
-<style>html,body {height:100%;}
-.h_iframe iframe {width:800; height:500;align:left;}
-.h_iframe {
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+.barChart1 {width:800; height:500;align:left;}
+.barChart1 {
     height: 100%;
 }
-.h_iframe1 iframe {width:800; height:500;align:left;}
-.h_iframe1 {
+.barChart1 {width:800; height:500;align:left;}
+.barChart1 {
     height: 100%;
 }
-</style>
-<body>
-<iframe id="barChart1" style="border-style: none; border-color: inherit; border-width: 0px; height:1222px; width:100%;" src="/Chart1.html"></iframe>
-<iframe id="barChart2" style="border-style: none; border-color: inherit; border-width: 0px; height:1222px; width:100%;" src="/Chart2.html"></iframe>
-<iframe id="barChart3" style="border-style: none; border-color: inherit; border-width: 0px; height:1222px; width:100%;" src="/Chart3.html"></iframe>
-<iframe id="ScatterplotChart" style="border-style: none; border-color: inherit; border-width: 0px; height:1222px; width:100%;" src="/ScatterplotChart.html"></iframe>
 
-</body>
+#button1,#button2,#button3,#button4{
+ background-color: #008CBA;
+ position: fixed;
+ color: white;
+ left:52%
+}
+#previous1,#previous2,#previous3{
+ background-color: #008CBA;
+ position: fixed;
+ color: white;
+ left:55.8%
+}
+#p1{
+ position: fixed;
+ left:76%;
+ top:10%;
+ letter-spacing: 2px;
+ text-align:left;
+ 
+}
+#p2{
+ position: fixed;
+ left:76%;
+ top:25%;
+ letter-spacing: 2px;
+ text-align:left;
+}
+#p3,#p5,#p4{
+position: fixed;
+left:76%;
+ top:100%;
+ letter-spacing: 2px;
+ text-align:left;
+}
+
+
+</style>
+<script>
+$(document).ready(function(){
+	$('#barChart2').hide();
+	$('#barChart3').hide();
+	$('#ScatterplotChart').hide();
+	$('#button3').hide();
+	$('#button4').hide();
+	$('#button2').hide();
+	$('#previous1').hide();
+	$('#previous2').hide();
+	$('#previous3').hide();
+	$('#p4').hide();
+	$('#p5').hide();
+	var count = 0;
+	$("#button1").click(function(){
+		if(count == 0){
+			$('#barChart2').show();
+			$('#button3').show();
+			$('#previous1').show();
+			$('#p3').show();
+			$('#p3').animate({top:"25%"}, "slow")
+		
+			$('#barChart1').hide();
+			$('#barChart3').hide();
+			$('#ScatterplotChart').hide();
+			$('#button1').hide();
+			$('#button4').hide();
+			$('#button2').hide();
+			$('#p2').animate({top:"100%"}, "slow")
+			count = count +1;
+			
+		}
+		else{
+		$('#barChart1').show();
+		$('#button2').show();
+		$('#p2').show();
+		$('#p2').animate({top:"25%"}, "slow")
+		
+		
+		$('#barChart2').hide();
+		$('#barChart3').hide();
+		$('#ScatterplotChart').hide();
+		$('#button3').hide();
+		$('#button4').hide();
+		$('#button1').hide();
+		$('#previous3').hide();
+		$('#p3').animate({top:"100%"}, "slow");
+		$('#p5').animate({top:"100%"}, "slow");
+		}
+	  });
+	$("#button2").click(function(){
+		$('#barChart2').show();
+		$('#button3').show();
+		$('#previous1').show();
+		$('#p3').show();
+		$('#p3').animate({top:"25%"}, "slow");
+		
+		
+		$('#barChart1').hide();
+		$('#barChart3').hide();
+		$('#ScatterplotChart').hide();
+		$('#button1').hide();
+		$('#button4').hide();
+		$('#button2').hide();
+		$('#p2').animate({top:"100%"}, "slow")
+	  });
+	$("#button3").click(function(){
+		$('#barChart3').show();
+		$('#button4').show();
+		$('#previous2').show();
+		$('#p4').show();
+		$('#p4').animate({top:"25%"}, "slow");
+		
+		$('#barChart1').hide();
+		$('#barChart2').hide();
+		$('#ScatterplotChart').hide();
+		$('#button1').hide();
+		$('#button2').hide();
+		$('#button3').hide();
+		$('#previous1').hide();
+		$('#p3').animate({top:"100%"}, "slow")
+		$('#p3').animate({top:"100%"}, "slow")
+	  });
+	$("#button4").click(function(){
+		$('#ScatterplotChart').show();
+		$('#button1').show();
+		$('#previous3').show();
+		$('#p5').show();
+		$('#p5').animate({top:"25%"}, "slow");
+		
+		$('#barChart1').hide();
+		$('#barChart2').hide();
+		$('#barChart3').hide();
+		$('#button3').hide();
+		$('#button2').hide();
+		$('#button4').hide();
+		$('#previous2').hide();
+		$('#p4').animate({top:"100%"}, "slow")
+		
+	  });
+	/*Previous button*/
+	$("#previous1").click(function(){
+		$('#barChart1').show();
+		$('#button2').show();
+		$('#p2').show();
+		$('#p2').animate({top:"25%"}, "slow")
+		
+		$('#barChart2').hide();
+		$('#barChart3').hide();
+		$('#ScatterplotChart').hide();
+		$('#button3').hide();
+		$('#button4').hide();
+		$('#button1').hide();
+		$('#previous1').hide();
+		$('#p3').animate({top:"100%"}, "slow")
+		
+	  });
+	/*Previous button*/
+	$("#previous2").click(function(){
+		$('#barChart2').show();
+		$('#button3').show();
+		$('#previous1').show();
+		$('#p3').show();
+		$('#p3').animate({top:"25%"}, "slow")
+		
+		$('#barChart1').hide();
+		$('#barChart3').hide();
+		$('#ScatterplotChart').hide();
+		$('#button1').hide();
+		$('#button4').hide();
+		$('#button2').hide();
+		$('#previous2').hide();
+		$('#p4').animate({top:"100%"}, "slow")
+		
+	  });
+	/*Previous button*/
+	$("#previous3").click(function(){
+		$('#barChart3').show();
+		$('#button4').show();
+		$('#previous2').show();
+		$('#p4').show();
+		$('#p4').animate({top:"25%"}, "slow");
+		
+		$('#barChart1').hide();
+		$('#barChart2').hide();
+		$('#ScatterplotChart').hide();
+		$('#button1').hide();
+		$('#button2').hide();
+		$('#button3').hide();
+		$('#previous3').hide();	
+		$('#p5').animate({top:"100%"}, "slow")
+	  });
+
+	
+	
+});
+</script>
+<head>
+<title>Holloywood's Most Profitable Story</title>
+</head>
+<body>
+<h1 style="position:relative;left:30%;">Holloywood's Most successful Story</h1>
+<div>
+<button class="btn btn-primary" id="button1" title="click here to go next slide">Next</button>
+<button class="btn btn-primary" id="button2" title="click here to go next slide">Next</button>
+<button class="btn btn-primary" id="button3" title="click here to go next slide">Next</button>
+<button class="btn btn-primary" id="button4" title="click here to go next slide">Next</button>
+<button class="btn btn-primary" id="previous1" title="click here to go back to the previous slide">Previous</button>
+<button class="btn btn-primary" id="previous2" title="click here to go back to the previous slide">Previous</button>
+<button class="btn btn-primary" id="previous3" title="click here to go back to the previous slide">Previous</button>
+
+
+</div>
+<iframe id="barChart1" style="border-style: none; border-color: inherit; border-width: 0px; height:75%; width:75%;" src="file:///Users/manishk/Desktop/student-services/student-services/src/main/webapp/WEB-INF/html/Chart1.html"></iframe>
+<iframe id="barChart2" style="border-style: none; border-color: inherit; border-width: 0px; height:75%; width:75%;" src="file:///Users/manishk/Desktop/student-services/student-services/src/main/webapp/WEB-INF/html/Chart2.html"></iframe>
+<iframe id="barChart3" style="border-style: none; border-color: inherit; border-width: 0px; height:75%; width:75%;" src="file:///Users/manishk/Desktop/student-services/student-services/src/main/webapp/WEB-INF/html/Chart3.html"></iframe>
+<iframe id="ScatterplotChart" style="border-style: none; border-color: inherit; border-width: 0px; height:75%; width:75%;" src="file:///Users/manishk/Desktop/student-services/student-services/src/main/webapp/WEB-INF/html/ScatterplotChart.html"></iframe>
+
+<p id= "p1">Through this study I am trying to show what genre of movies are mostly made and what is the favourite genre and most profitable genre in hollywood based on the data available between the year 2007 to 2011. </p>
+<p id= "p2">If you look at the left side slide as shown in the graph the number of movies made in each genre (Comedy, Romance, Action, Drama ,Fantasy and Animation) between the year 2007 to 2011. To understand how many movies were made in each genre in each year, can be achieved by using the year filter drop down.<br>
+         <br>In order to analyze the most successful genre, we have to consider the following criteria:<br>
+         <br>1. Profitablity
+         <br>2. World Wide Gross
+         <br>3. Audience Score </p>
+
+ <p id="p3">Here you can see the Avg. profitablity chart with respect to each genre. As you can see the most profitable genre is Drama, followed by Comedy, Romance and Animation.  
+    <br><br>The point is to be noted here is that only 3 movies were made in Animation genre between the year 2007 and 2010 compare to Comedy and Romance. So from this chart we can see that Drama and Animation were most profitable Genre. However in order to proof this we will look few more upcoming slides.   </p>
+
+<p id="p4">The other important Factor in analyzing the most successful genre is the world wide gross income for each genre. If you notice, the Animation has the maximum world wide gross compare to any other genre and next genre in the list is Fantasy. The Drama genre here seems to be doing less business compare to Comedy and Romance or Animation.
+      <br><br>If we focus on Animation, we know that only 3 movies were made between the year 2007 and 2011 and by looking the profitablity and gross income chart, Animation stands out a clear winner.
+      <br>However, before we decide Animation as the most successful genre, we would have to also anyalize the every movies made in each genre and what public thinks about it.<br>
+      <br>So, Next we are going to check the Avg. profitablity vs audience Score for each movie in next slide.</p>
+
+<p id="p5">In this as you can see the list of all the movies respective to there genre. Here I am trying to show the most profitable movies vs audience Score.
+      <br><br>If you hover over to the dots or use the legend to filter the genre, you can see the Animation and Drama genre is standing out compare to other genre in terms of audience score and profitablity. However if you compare both, you will 
+      notice that out of three animation movies, two are highly rated by audience and also giving a tough fight to Drama genre in terms of Profitablity.
+      
+      <br><br>Next in the list is movies from romance genre, followed by comedy and drama in terms audience score. The reason they are behind evne though they are profitable compare to Animation because the money spent on making these genre is very less compare to Animation. </p>
+      
+</body> 
 </html>
