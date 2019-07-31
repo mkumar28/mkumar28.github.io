@@ -25,7 +25,7 @@
 }
 #remove, #drop {
     position: relative;
-    left:50%;
+    left:70%;
     top: 80
     
     
@@ -107,22 +107,9 @@ var data1 = []
   {return g.Profitability; }),
    count : d.length }; }).entries(data)
   
-console.log(data1)
-  var elements = []
-  element.forEach(function(d)
-             { if(d.key == 2008){
-               d.values.forEach(function(g){
-                   elements.push({
-                         key:g.key,
-                         values : g.value
-                        });  
-                       
-                        });
-                        }          
-                      });
 
 //Adding color and profitablity to the Data1 Array     
-  var color = ["red", "Yellow", "steelblue", "orange", "green" , "blue"];
+  var color = ["red", "#00ff00", "steelblue", "#800000", "green" , "#6600cc"];
   i=0;
   data1.forEach(function(d){
         d.color =  color[i];
@@ -221,7 +208,7 @@ svg.append("g")
                          value : g.value,
                          count : g.count,
                          profit : g.Profitability,
-                         color:'Yellow'
+                         color:'#00ff00'
                          
                         });
                  if(g.key == 'Romance')
@@ -239,7 +226,7 @@ svg.append("g")
                          value : g.value,
                          count : g.count,
                          profit : g.Profitability,
-                         color:'orange'
+                         color:'#800000'
                          
                         });
                  if(g.key == 'Action')
@@ -257,7 +244,7 @@ svg.append("g")
                          value : g.value,
                          count : g.count,
                          profit :g.Profitability,
-                         color:'blue'
+                         color:'#6600cc'
                          
                         });
                        

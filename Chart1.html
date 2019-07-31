@@ -1,10 +1,12 @@
 <html>
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <style> body {
-  background-color: #F1F3F3    
+  background-color: #F1F3F3   
+   
 }
 .axis {
 	font: 15px sans-serif;
+	
 }
 .axis path,
 .axis line {
@@ -25,7 +27,7 @@
   }
 #remove, #drop{
     position: relative;
-    left:50%;
+    left:70%;
     top: 80
     
     
@@ -42,7 +44,7 @@ async function init() {
 
 const data = await d3.csv('https://raw.githubusercontent.com/mkumar28/CSDV/master/HollywoodsMostProfitableStories.csv');
 
-var margin = {top: 100, right: 20, bottom: 30, left: 100},
+var margin = {top: 100, right: 20, bottom: 30, left: 200},
     
 
 width = 960 - margin.left - margin.right,
@@ -98,7 +100,7 @@ var svg = d3.select('body').append("svg")
  
   
        
-  var color = ["red", "Yellow", "steelblue", "orange", "green" , "blue"];
+  var color = ["red", "#00ff00", "steelblue", "#800000", "green" , "#6600cc"];
   i=0;
   data1.forEach(function(d){
         d.color =  color[i];
@@ -214,7 +216,7 @@ var yCall = svg.append("g")
                     elements.push({
                          key:g.key,
                          value : g.value,
-                         color:'Yellow'
+                         color:'#00ff00'
                          
                         });
                  if(g.key == 'Romance')
@@ -228,7 +230,7 @@ var yCall = svg.append("g")
                     elements.push({
                          key:g.key,
                          value : g.value,
-                         color:'orange'
+                         color:'#800000'
                          
                         });
                  if(g.key == 'Action')
@@ -242,7 +244,7 @@ var yCall = svg.append("g")
                     elements.push({
                          key:g.key,
                          value : g.value,
-                         color:'blue'
+                         color:'#6600cc'
                          
                         });
                        
