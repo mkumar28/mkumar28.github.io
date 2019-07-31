@@ -76,9 +76,109 @@ var svg = d3.select('body').append("svg")
 });
  
   
-  var cValue = function(d) { return d.Genre;}
-  var color = d3.scaleOrdinal(d3.schemeCategory10);
+ // var cValue = function(d) { return d.Genre;}
+ //var color = d3.scaleOrdinal(d3.schemeCategory10);
+  //Adding color and profitablity to the Data1 Array     
+ // var Genre = [];
+  var counts= {};
+ data.forEach(function(r){
+      if (!counts[r.Genre]) {
+        counts[r.Genre] = 0;
+    }
+    counts[r.Genre]++;
+   });
+ var Genre = []
+     Object.keys(counts).forEach(function(key) {
+       if(key =="Comedy" ){
+        Genre.push({
+           Genre: key,
+           color: 'red'
 
+        });
+       }
+      if(key =="Drama" ){
+        Genre.push({
+           Genre: key,
+           color: '#00ff00'
+
+        });
+       }
+      if(key =="Romance" ){
+        Genre.push({
+           Genre: key,
+           color: 'steelblue'
+
+        });
+       }
+      if(key =="Animation" ){
+        Genre.push({
+           Genre: key,
+           color: '#800000'
+
+        });
+       }
+      if(key =="Action" ){
+        Genre.push({
+           Genre: key,
+           color: 'green'
+
+        });
+       }
+      if(key =="Fantasy" ){
+        Genre.push({
+           Genre: key,
+           color: '#6600cc'
+
+        });
+       }
+}); 
+  
+  Genre.forEach(function(d){
+    
+     if(d.Genre == "Comedy"){
+           d.color =  'red'
+        }
+        if(d.Genre == "Drama"){
+           d.color =  '#00ff00'
+        }
+      if(d.Genre == "Romance"){
+           d.color =  'steelblue'
+        }
+      if(d.Genre == "Animation"){
+           d.color =  '#800000'
+        }
+      if(d.Genre == "Action"){
+           d.color =  'green'
+        }
+      if(d.Genre == "Fantasy"){
+           d.color =  '#6600cc'
+        }
+  });
+
+  data1.forEach(function(d){
+        if(d.Genre == "Comedy"){
+           d.color =  'red'
+        }
+        if(d.Genre == "Drama"){
+           d.color =  '#00ff00'
+        }
+      if(d.Genre == "Romance"){
+           d.color =  'steelblue'
+        }
+      if(d.Genre == "Animation"){
+           d.color =  '#800000'
+        }
+      if(d.Genre == "Action"){
+           d.color =  'green'
+        }
+      if(d.Genre == "Fantasy"){
+           d.color =  '#6600cc'
+        }
+     
+               
+      });
+  
+//console.log(Genre)
 
    // append the rectangles for the bar chart
   svg.selectAll(".dot")
@@ -88,13 +188,13 @@ var svg = d3.select('body').append("svg")
       .attr("r", 4)
       .attr("cx", function(d) { return x(d.Audience_score); })
       .attr("cy", function(d) { return y(d.Profitability) ; })
-      .style("fill", function(d){return color(cValue(d));})
+      .style("fill", function(d){return d.color;})
        .on("mouseover", function(d) {
           tooltip.transition()
                .duration(200)
                .style("opacity", .9);
-          tooltip.html("Audience_score : "+(d.Audience_score) + "<br>"  + "Profitability : "+d.Profitability
-                   + "<br>"+ "Film : "+d.film)
+          tooltip.html("Genre : "+(d.Genre)+"<br>"+"Audience_score : "+(d.Audience_score) + "<br>"  + "Profitability : "+Math.round(d.Profitability*100)/100
+                   +"%"+"<br>"+ "Film : "+d.film)
                .style("left", (d3.event.pageX + 5) + "px")
                .style("top", (d3.event.pageY - 28) + "px");
       })
@@ -116,7 +216,7 @@ var svg = d3.select('body').append("svg")
       .attr("dy", "0.30em")
       .attr("text-anchor", "end")
       .attr("fill", "#5D6971")
-      .text("Availblity%");
+      .text("Audience_score%");
  
   formatValue = d3.format(".2s");
   // add the y Axis
@@ -134,34 +234,56 @@ var svg = d3.select('body').append("svg")
   
   // draw legend
   var legend = svg.selectAll(".legend")
-      .data(color.domain())
-    .enter().append("g")
+      .data(Genre)
+      .enter().append("g")
       .attr("class", "legend")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
+      
+      
+var clicked = ""
   // draw legend colored rectangles
   legend.append("rect")
+      .attr("id", "legend")
       .attr("x", width - 18)
       .attr("width", 18)
       .attr("height", 18)
-      .style("fill", color);
+      .style("fill", function(d){return d.color;})
+      .on("click",function(d){
+       d3.selectAll(".dot").style("opacity",1)
+       var id = "legendtext_"+ d.Genre;
+        var circle =  svg.selectAll('.dot');
+      
+        var value = document.getElementById(id).textContent;
+        console.log(d.Genre)
+  
+       if(clicked !=value){
+         
+          circle
+          .filter(function(d){
+              return d.Genre !== value;
+            })
+      
+          .style("opacity",0.1)   
+          clicked = value
+       }
+    else{
+      clicked = ""
+      
+    }
+  
+  
+  });
 
   // draw legend text
   legend.append("text")
+      .attr("id", function(d){return "legendtext"+"_"+d.Genre;})
       .attr("x", width - 24)
       .attr("y", 9)
       .attr("dy", ".35em")
       .style("text-anchor", "end")
-      .text(function(d) { return d;})
+      .text(function(d) { return d.Genre;});
 
-
-
-
-
-
-
-      
-      
+   
   
  }
 
