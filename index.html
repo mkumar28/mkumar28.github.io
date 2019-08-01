@@ -1,51 +1,63 @@
 <html>
+<head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <style>
-.barChart1 {width:800; height:500;align:left;}
-.barChart1 {
-    height: 100%;
+
+#div1{
+width:70%;
+height:70%;
+margin-right:10px;
+float:left;
 }
-.barChart1 {width:800; height:500;align:left;}
-.barChart1 {
-    height: 100%;
+#div2{
+width:25%;
+height:80%;
+margin-right:10px;
+float:left;
+}
+#div3{
+width:100%;
+height:5%;
+margin-right:10px;
+
 }
 
 #button1,#button2,#button3,#button4{
  background-color: #008CBA;
- position: fixed;
  color: white;
- left:52%
+ top:25%;
+ position: relative;
+ left:60%;
+
+
 }
 #previous1,#previous2,#previous3{
  background-color: #008CBA;
- position: fixed;
+ position: relative;
  color: white;
- left:55.8%
+ top:25%;
+ position: relative;
+ left:60%;
+
 }
-#p1{
- position: fixed;
- left:76%;
- top:10%;
+#p1{ 
  letter-spacing: 2px;
  text-align:left;
- 
+ position: relative;
 }
-#p2{
- position: fixed;
- left:76%;
- top:25%;
+#p2{ 
+ position: relative;
  letter-spacing: 2px;
  text-align:left;
 }
 #p3,#p5,#p4{
-position: fixed;
-left:76%;
- top:100%;
  letter-spacing: 2px;
  text-align:left;
+ position: relative;
+ top:100%
 }
 
 
@@ -63,6 +75,7 @@ $(document).ready(function(){
 	$('#previous3').hide();
 	$('#p4').hide();
 	$('#p5').hide();
+	$('#p3').hide();
 	var count = 0;
 	$("#button1").click(function(){
 		if(count == 0){
@@ -70,7 +83,7 @@ $(document).ready(function(){
 			$('#button3').show();
 			$('#previous1').show();
 			$('#p3').show();
-			$('#p3').animate({top:"25%"}, "slow")
+			$('#p3').animate({top:"2%"}, "slow")
 		
 			$('#barChart1').hide();
 			$('#barChart3').hide();
@@ -79,6 +92,7 @@ $(document).ready(function(){
 			$('#button4').hide();
 			$('#button2').hide();
 			$('#p2').animate({top:"100%"}, "slow")
+			$('#p2').hide()
 			count = count +1;
 			
 		}
@@ -86,7 +100,7 @@ $(document).ready(function(){
 		$('#barChart1').show();
 		$('#button2').show();
 		$('#p2').show();
-		$('#p2').animate({top:"25%"}, "slow")
+		$('#p2').animate({top:"2%"}, "slow")
 		
 		
 		$('#barChart2').hide();
@@ -97,7 +111,9 @@ $(document).ready(function(){
 		$('#button1').hide();
 		$('#previous3').hide();
 		$('#p3').animate({top:"100%"}, "slow");
+		$('#p3').hide();
 		$('#p5').animate({top:"100%"}, "slow");
+		$('#p5').hide();
 		}
 	  });
 	$("#button2").click(function(){
@@ -105,7 +121,7 @@ $(document).ready(function(){
 		$('#button3').show();
 		$('#previous1').show();
 		$('#p3').show();
-		$('#p3').animate({top:"25%"}, "slow");
+		$('#p3').animate({top:"2%"}, "slow");
 		
 		
 		$('#barChart1').hide();
@@ -115,13 +131,14 @@ $(document).ready(function(){
 		$('#button4').hide();
 		$('#button2').hide();
 		$('#p2').animate({top:"100%"}, "slow")
+		$('#p2').hide();
 	  });
 	$("#button3").click(function(){
 		$('#barChart3').show();
 		$('#button4').show();
 		$('#previous2').show();
 		$('#p4').show();
-		$('#p4').animate({top:"25%"}, "slow");
+		$('#p4').animate({top:"2%"}, "slow");
 		
 		$('#barChart1').hide();
 		$('#barChart2').hide();
@@ -131,14 +148,14 @@ $(document).ready(function(){
 		$('#button3').hide();
 		$('#previous1').hide();
 		$('#p3').animate({top:"100%"}, "slow")
-		$('#p3').animate({top:"100%"}, "slow")
+		$('#p3').hide();
 	  });
 	$("#button4").click(function(){
 		$('#ScatterplotChart').show();
 		$('#button1').show();
 		$('#previous3').show();
 		$('#p5').show();
-		$('#p5').animate({top:"25%"}, "slow");
+		$('#p5').animate({top:"2%"}, "slow");
 		
 		$('#barChart1').hide();
 		$('#barChart2').hide();
@@ -147,7 +164,8 @@ $(document).ready(function(){
 		$('#button2').hide();
 		$('#button4').hide();
 		$('#previous2').hide();
-		$('#p4').animate({top:"100%"}, "slow")
+		$('#p4').animate({top:"100%"}, "slow");
+		$('#p4').hide();
 		
 	  });
 	/*Previous button*/
@@ -155,7 +173,7 @@ $(document).ready(function(){
 		$('#barChart1').show();
 		$('#button2').show();
 		$('#p2').show();
-		$('#p2').animate({top:"25%"}, "slow")
+		$('#p2').animate({top:"2%"}, "slow")
 		
 		$('#barChart2').hide();
 		$('#barChart3').hide();
@@ -164,7 +182,8 @@ $(document).ready(function(){
 		$('#button4').hide();
 		$('#button1').hide();
 		$('#previous1').hide();
-		$('#p3').animate({top:"100%"}, "slow")
+		$('#p3').animate({top:"100%"}, "slow");
+		$('#p3').hide();
 		
 	  });
 	/*Previous button*/
@@ -173,7 +192,7 @@ $(document).ready(function(){
 		$('#button3').show();
 		$('#previous1').show();
 		$('#p3').show();
-		$('#p3').animate({top:"25%"}, "slow")
+		$('#p3').animate({top:"2%"}, "slow")
 		
 		$('#barChart1').hide();
 		$('#barChart3').hide();
@@ -182,7 +201,8 @@ $(document).ready(function(){
 		$('#button4').hide();
 		$('#button2').hide();
 		$('#previous2').hide();
-		$('#p4').animate({top:"100%"}, "slow")
+		$('#p4').animate({top:"100%"}, "slow");
+		$('#p4').hide();
 		
 	  });
 	/*Previous button*/
@@ -191,7 +211,7 @@ $(document).ready(function(){
 		$('#button4').show();
 		$('#previous2').show();
 		$('#p4').show();
-		$('#p4').animate({top:"25%"}, "slow");
+		$('#p4').animate({top:"2%"}, "slow");
 		
 		$('#barChart1').hide();
 		$('#barChart2').hide();
@@ -200,19 +220,20 @@ $(document).ready(function(){
 		$('#button2').hide();
 		$('#button3').hide();
 		$('#previous3').hide();	
-		$('#p5').animate({top:"100%"}, "slow")
+		$('#p5').animate({top:"100%"}, "slow");
+		$('#p5').hide();
 	  });
 
 	
 	
 });
 </script>
-<head>
+
 <title>Holloywood's Most Profitable Story</title>
 </head>
 <body>
 <h1 style="position:relative;left:30%;">Holloywood's Most successful Story</h1>
-<div>
+<div id="div3">
 <button class="btn btn-primary" id="button1" title="click here to go next slide">Next</button>
 <button class="btn btn-primary" id="button2" title="click here to go next slide">Next</button>
 <button class="btn btn-primary" id="button3" title="click here to go next slide">Next</button>
@@ -220,14 +241,14 @@ $(document).ready(function(){
 <button class="btn btn-primary" id="previous1" title="click here to go back to the previous slide">Previous</button>
 <button class="btn btn-primary" id="previous2" title="click here to go back to the previous slide">Previous</button>
 <button class="btn btn-primary" id="previous3" title="click here to go back to the previous slide">Previous</button>
-
-
 </div>
-<iframe id="barChart1" style="border-style: none; border-color: inherit; border-width: 0px; height:75%; width:75%;" src="/Chart1.html"></iframe>
-<iframe id="barChart2" style="border-style: none; border-color: inherit; border-width: 0px; height:75%; width:75%;" src="/Chart2.html"></iframe>
-<iframe id="barChart3" style="border-style: none; border-color: inherit; border-width: 0px; height:75%; width:75%;" src="/Chart3.html"></iframe>
-<iframe id="ScatterplotChart" style="border-style: none; border-color: inherit; border-width: 0px; height:75%; width:75%;" src="/ScatterplotChart.html"></iframe>
-
+<div id="div1">
+ <iframe id="barChart1" style="border-style: none; border-color: inherit;position:relative; border-width: 0px; height:100%; width:100%;" src="file:///Users/manishk/Desktop/student-services/student-services/src/main/webapp/WEB-INF/html/Chart1.html"></iframe>
+<iframe id="barChart2" style="border-style: none; border-color: inherit; border-width: 0px; height:100%; width:100%;" src="file:///Users/manishk/Desktop/student-services/student-services/src/main/webapp/WEB-INF/html/Chart2.html"></iframe>
+<iframe id="barChart3" style="border-style: none; border-color: inherit; border-width: 0px; height:100%; width:100%;" src="file:///Users/manishk/Desktop/student-services/student-services/src/main/webapp/WEB-INF/html/Chart3.html"></iframe>
+<iframe id="ScatterplotChart" style="border-style: none; border-color: inherit; border-width: 0px; height:100%; width:100%;" src="file:///Users/manishk/Desktop/student-services/student-services/src/main/webapp/WEB-INF/html/ScatterplotChart.html"></iframe>
+</div>
+<div id="div2">
 <p id= "p1">Through this study I am trying to show what genre of movies are mostly made and what is the favourite genre and most profitable genre in hollywood based on the data available between the year 2007 to 2011. </p>
 <p id= "p2">If you look at the left side slide as shown in the graph the number of movies made in each genre (Comedy, Romance, Action, Drama ,Fantasy and Animation) between the year 2007 to 2011. To understand how many movies were made in each genre in each year, can be achieved by using the year filter drop down.<br>
          <br>In order to analyze the most successful genre, we have to consider the following criteria:<br>
@@ -248,6 +269,6 @@ $(document).ready(function(){
       notice that out of three animation movies, two are highly rated by audience and also giving a tough fight to Drama genre in terms of Profitablity.
       
       <br><br>Next in the list is movies from romance genre, followed by comedy and drama in terms audience score. The reason they are behind evne though they are profitable compare to Animation because the money spent on making these genre is very less compare to Animation. </p>
-      
+  </div>    
 </body> 
 </html>
