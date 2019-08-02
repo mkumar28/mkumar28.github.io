@@ -96,7 +96,9 @@ var svg = d3.select('body').append("svg")
   .key(function(d){return d.Genre})
   .rollup(function(g){ return g.length;}).entries(data)
  
- 
+ element.sort(function(a, b) {
+    return a.key - b.key;
+});
  
   
        
@@ -138,6 +140,7 @@ var svg = d3.select('body').append("svg")
       .attr("y", function(d) { return y(d.count); })
       .attr("height", function(d) { return height - y(d.count) ; })
       .attr("fill", function(d){return d.color})
+      .attr("cursor", "pointer")
       .on("mousemove", function(d){
             tooltip
               .style("left", d3.event.pageX - 50 + "px")
@@ -145,7 +148,8 @@ var svg = d3.select('body').append("svg")
               .style("display", "inline-block")
               .html(("Genre: "+d.Genre) + "<br>"+"No. of Movies: "+(d.count));
         })
-     .on("mouseout", function(d){ tooltip.style("display", "none");});
+     .on("mouseout", function(d){ tooltip.style("display", "none")
+    	 .style("cursor", "default");});
        
   
  var xCall=  svg.append("g").attr("transform", "translate(0," + height + ")")
@@ -180,8 +184,9 @@ var yCall = svg.append("g")
   var selector = d3.select("#drop")
     	.append("select")
     	.attr("id","dropdown")
-         .style("align", 'left' )
-         .style("top", "1000000")
+    	.attr("cursor", "pointer")
+        .style("align", 'left' )
+        .style("top", "1000000")
         .on("change", function(d){
            var duration = 1000;
            /*hiding the exisint svg and also removing it every time*/
@@ -264,6 +269,7 @@ var yCall = svg.append("g")
       .enter()
       .append("rect")
       .attr("class", "rectangle")
+      .attr("cursor", "pointer")
       .on("mousemove", function(d){
             tooltip
               .style("left", d3.event.pageX - 50 + "px")
@@ -321,7 +327,9 @@ var yCall = svg.append("g");
       })
       .text(function(d){
         return d.key;
-      });
+      })     
+      .attr("cursor", "pointer");
+  
 
  var button = d3.select("#remove")
     	.append("button")

@@ -107,7 +107,9 @@ var data1 = []
   {return g.Profitability; }),
    count : d.length }; }).entries(data)
   
-
+ element.sort(function(a, b) {
+    return a.key - b.key;
+});
 //Adding color and profitablity to the Data1 Array     
   var color = ["red", "#00ff00", "steelblue", "#800000", "green" , "#6600cc"];
   i=0;
@@ -134,6 +136,7 @@ var data1 = []
       .attr("y", function(d) { return y(d.value) ; })
       .attr("height", function(d) { return height - y(d.value) ; })
       .attr("fill", function(d){return d.color})
+      .attr("cursor", "pointer")
       .on("mousemove", function(d){
             tooltip
               .style("left", d3.event.pageX - 50 + "px")
@@ -264,6 +267,7 @@ svg.append("g")
       .enter()
       .append("rect")
       .attr("class", "rectangle")
+      .attr("cursor", "pointer")
       .on("mousemove", function(d){
             tooltip
               .style("left", d3.event.pageX - 50 + "px")
