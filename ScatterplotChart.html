@@ -185,7 +185,7 @@ var svg = d3.select('body').append("svg")
       .data(data1)
       .enter().append("circle")
       .attr("class", "dot")
-      .attr("r", 4)
+      .attr("r", 6)
       .attr("cx", function(d) { return x(d.Audience_score); })
       .attr("cy", function(d) { return y(d.Profitability) ; })
       .style("fill", function(d){return d.color;})
@@ -238,6 +238,7 @@ var svg = d3.select('body').append("svg")
       .data(Genre)
       .enter().append("g")
       .attr("class", "legend")
+      .attr("title","Double click to go back to Chart")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
       
       

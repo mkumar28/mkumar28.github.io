@@ -43,7 +43,7 @@ margin-right:10px;
  left:60%;
 
 }
-#p1{ 
+#p1,#p6{ 
  letter-spacing: 2px;
  text-align:left;
  position: relative;
@@ -53,12 +53,13 @@ margin-right:10px;
  letter-spacing: 2px;
  text-align:left;
 }
-#p3,#p5,#p4{
+#p3,#p5,#p4,#p7{
  letter-spacing: 2px;
  text-align:left;
  position: relative;
  top:100%
 }
+
 
 
 </style>
@@ -76,6 +77,12 @@ $(document).ready(function(){
 	$('#p4').hide();
 	$('#p5').hide();
 	$('#p3').hide();
+	$("#p6").hide();
+	$("#p7").hide();
+	
+	$('#button1').hide();  
+	$("#button1").delay(35000).animate({height: 'show'});
+	$("#p6").delay(25000).animate({height: 'show'});
 	var count = 0;
 	$("#button1").click(function(){
 		if(count == 0){
@@ -93,6 +100,7 @@ $(document).ready(function(){
 			$('#button2').hide();
 			$('#p2').animate({top:"100%"}, "slow")
 			$('#p2').hide()
+			$("#p6").hide()
 			count = count +1;
 			
 		}
@@ -100,8 +108,9 @@ $(document).ready(function(){
 		$('#barChart1').show();
 		$('#button2').show();
 		$('#p2').show();
+		$("#p6").show()
 		$('#p2').animate({top:"2%"}, "slow")
-		
+		$("#p6").animate({top:"2%"}, "slow")
 		
 		$('#barChart2').hide();
 		$('#barChart3').hide();
@@ -152,10 +161,11 @@ $(document).ready(function(){
 	  });
 	$("#button4").click(function(){
 		$('#ScatterplotChart').show();
-		$('#button1').show();
 		$('#previous3').show();
 		$('#p5').show();
 		$('#p5').animate({top:"2%"}, "slow");
+		$('#p7').delay(25000).animate({height: 'show'});
+		$('#p7').animate({top:"2%"}, "slow");
 		
 		$('#barChart1').hide();
 		$('#barChart2').hide();
@@ -222,10 +232,12 @@ $(document).ready(function(){
 		$('#previous3').hide();	
 		$('#p5').animate({top:"100%"}, "slow");
 		$('#p5').hide();
+		$('#p7').animate({top:"100%"}, "slow");
+		$('#p7').hide();
 	  });
 
-	
-	
+
+
 });
 </script>
 
@@ -234,7 +246,7 @@ $(document).ready(function(){
 <body>
 <h1 style="position:relative;left:30%;">Holloywood's Most successful Story</h1>
 <div id="div3">
-<button class="btn btn-primary" id="button1" title="click here to go next slide">Next</button>
+<button class="btn btn-primary" id="button1" title="click here to go next slide" >Next</button>
 <button class="btn btn-primary" id="button2" title="click here to go next slide">Next</button>
 <button class="btn btn-primary" id="button3" title="click here to go next slide">Next</button>
 <button class="btn btn-primary" id="button4" title="click here to go next slide">Next</button>
@@ -251,8 +263,8 @@ $(document).ready(function(){
 <div id="div2">
 <p id= "p1">Through this study I am trying to show what genre of movies are mostly made and what is the favourite genre and most profitable genre in hollywood based on the data available between the year 2007 to 2011. </p>
 <p id= "p2">If you look at the left side slide as shown in the graph the number of movies made in each genre (Comedy, Romance, Action, Drama ,Fantasy and Animation) between the year 2007 to 2011. To understand how many movies were made in each genre in each year, can be achieved by using the Filter by Year drop down.
-          <b>As you can see 41 movies were made in Comedy Genre between the year 2007 to 2011.</b><br>
-         <br>In order to analyze the most successful genre, we have to consider the following criteria:<br>
+          <b>As you can see 41 movies were made in Comedy Genre between the year 2007 to 2011.</b><br></p>
+         <p id="p6">In order to analyze the most successful genre, we have to consider the following criteria:<br>
          <br>1. Profitablity
          <br>2. World Wide Gross
          <br>3. Audience Score <br><br>
@@ -272,8 +284,8 @@ $(document).ready(function(){
       <br><br>If you hover over to the dots or use the legend to filter the genre, you can see the Animation and Drama genre is standing out compare to other genre in terms of audience score and profitablity. However if you compare both, you will 
       notice that out of three animation movies, two are highly rated by audience and also giving a tough fight to Drama genre in terms of Profitablity.
       
-      <br><br>Next in the list is movies from romance genre, followed by comedy and drama in terms audience score. The reason they are behind evne though they are profitable compare to Animation because the money spent on making these genre is very less compare to Animation. 
-      <br><br><b>So,from all this chart we can conclude that Animation is highest gross income and also most loved genre by the audience compare to any other genre.</b> </p>
+      <br><br>Next in the list is movies from romance genre, followed by comedy and drama in terms of audience score. The reason they are behind even though they are profitable compare to Animation because the money spent on making these genre is very less compare to Animation. </p>
+      <p id="p7"><b><br>So,from all this chart we can conclude that Animation is highest gross income and also most loved genre by the audience compare to any other genre.<b></b></b> </p>
   </div>    
 </body> 
 </html>
